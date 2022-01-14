@@ -8,6 +8,8 @@ let randomNumber = Math.floor(Math.random() * maxValue) + minValue;
 const guesses = document.querySelector('.guesses');
 const lastResult = document.querySelector('.lastResult');
 const lowOrHi = document.querySelector('.lowOrHi');
+const numberRange = document.querySelector('.numberRange');
+const guessDescription = document.querySelector('.guessDescription');
 const time = document.querySelector('.timecount');
 
 const guessSubmit = document.querySelector('.guessSubmit');
@@ -16,6 +18,9 @@ const guessField = document.querySelector('.guessField');
 let guessCount = 1;
 let resetButton;
 guessField.focus();
+
+numberRange.textContent = 'Choose a number between ' + minValue + ' and ' + maxValue + '.';
+guessDescription.textContent = 'See if you can guess it in ' +  maxGuesses + ' turns or fewer.';
 
 const checkGuess = () => {
   const userGuess = Number(guessField.value);
@@ -56,10 +61,10 @@ const stopTimer = () => {
   const stopTime = Date.now() - startTime;
 
   if (guessCount === maxGuesses)  {
-    time.textContent += 'Your time is ' + Math.floor(stopTime / 1000) + ' seconds!';
+    time.textContent += 'Your time was ' + Math.floor(stopTime / 1000) + ' seconds!';
   }
   else {
-    time.textContent += 'Your time is ' + Math.floor(stopTime / 1000) + ' seconds! It took ' + guessCount + ' guesses.';
+    time.textContent += 'Your time was ' + Math.floor(stopTime / 1000) + ' seconds! It took ' + guessCount + ' guesses.';
   }
 };
 
