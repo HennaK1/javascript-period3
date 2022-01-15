@@ -1,6 +1,6 @@
 /*layout kesken*/
 body {
-  background: url("/assets/back.jpeg");
+  background: url("./back.jpeg");
   margin: 0;
   padding: 0;
   background-attachment: fixed;
