@@ -1,7 +1,9 @@
 /*layout kesken*/
 body {
   background-image: linear-gradient(110deg, #a0bfc7, #5c85cf);
-  margin: 150px;
+  margin-left: 270px;
+  margin-right: 270px;
+  margin-top: 90px;
   background-attachment: fixed;
 }
 
