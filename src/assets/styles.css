@@ -1,23 +1,32 @@
 /*layout kesken*/
 body {
-  background-image: linear-gradient(110deg, #a0bfc7, #5c85cf);
-  margin-left: 270px;
-  margin-right: 270px;
-  margin-top: 90px;
+  background: url("/assets/back.jpeg");
+  background-size: 1430px;
+  margin: 0;
+  padding: 0;
   background-attachment: fixed;
 }
 
 li {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   display: grid;
   justify-content: center;
-  align-items: center;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 3px;
   font-size: 20px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(223, 223, 223);
   padding: 10px;
   margin: 10px;
+  margin-left: 290px;
+  margin-right: 290px;
 }
+
+h1 {
+  text-align: center;
+  font-family: cursive;
+}
+
 .lang,
 .sort,
 .random {
@@ -37,8 +46,11 @@ li {
 .lang,
 .sort,
 .random {
-  background-color: white;
+  background-color: rgb(230, 230, 230);
   color: black;
+  border: 2px solid rgb(0, 0, 0);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .random:hover,
@@ -52,4 +64,9 @@ li {
   display: grid;
   justify-content: center;
   grid-template-columns: 200px 200px 200px;
+}
+img,
+header {
+  height: 240px;
+  text-align: center;
 }

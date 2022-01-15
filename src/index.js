@@ -10,13 +10,21 @@ for (let i in LunchMenu.courses){
   coursesEn.push(LunchMenu.courses[i].title_en);
 }
 
+const header= document.querySelector('.header');
+const menuName = document.querySelector('.menuName');
 const menu = document.querySelector('.menu');
 const langButton = document.querySelector('.lang');
 const sortButton = document.querySelector('.sort');
 const randomButton = document.querySelector('.random');
 let finnishList = true;
 
+//header picture
+const img = document.createElement("img");
+img.src = "./assets/header.jpeg";
+header.appendChild(img);
+
 coursesFi.forEach(meal => {
+  menuName.textContent = 'Menu suomeksi:';
   menu.innerHTML += '<li>' + meal + '</li>';
 });
 
@@ -25,11 +33,13 @@ const changeLanguage = () =>{
   menu.innerHTML = '';
   if (finnishList){
     coursesEn.forEach(meal => {
+      menuName.textContent = 'Menu englanniksi:';
       menu.innerHTML += '<li>' + meal + '</li>';
     });
     finnishList = false;
   }else{
     coursesFi.forEach(meal => {
+      menuName.textContent = 'Menu suomeksi:';
       menu.innerHTML += '<li>' + meal + '</li>';
     });
     finnishList = true;
