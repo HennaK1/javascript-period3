@@ -23,13 +23,16 @@ li {
 }
 
 ul {
+  grid-area: main;
   list-style-type: none;
   padding: 0;
+  padding-top: 50px;
 }
 
 h1 {
   text-align: center;
   font-family: cursive;
+  grid-area: main;
 }
 
 .lang,
@@ -68,10 +71,20 @@ h1 {
 .container {
   display: grid;
   justify-content: center;
+  grid-area: section;
   grid-template-columns: 200px 200px 200px;
 }
 img,
 header {
   height: 240px;
   text-align: center;
+  grid-area: header;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header header header header header header"
+    "main main main main main main"
+    "section section section section section section";
 }
