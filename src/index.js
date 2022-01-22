@@ -1,4 +1,7 @@
-/**Array list */
+import fazerMenu from './assets/fazer-menu.json';
+
+
+/**Array menu list */
 const menu = [
   {name: 'Lingonberry jam', price: 4.00},
   {name: 'Mushroom and bean casserole', price: 5.50},
@@ -37,7 +40,7 @@ menu.forEach((meal) => {
  */
  const sortMenubyPrice = (meal) => {
   let sortPrice = menu.sort((a, b) => {
-    return list = a.price - b.price;
+    return a.price - b.price;
   });
   console.log('Sorted by price', sortPrice);
 };
@@ -78,6 +81,36 @@ const sumUp = () => {
   console.log('menu prices summed up', sum);
 };
 sumUp();
+
+// B
+
+//Array list for vegan dishes
+const veganMeals = [];
+
+/**
+ * Finds vegan dishes from Fazer json file
+ * @param {String} menu json-file parsing
+ */
+const parseFazerMenu = (menu) => {
+  const setMenus = menu.SetMenus;
+  for (const setMenu of setMenus) {
+    const meals = setMenu.Meals;
+    for (const meal of meals) {
+      const name = meal.Name;
+      const diets = meal.Diets;
+      for (const diet of diets){
+        if (diet == 'Veg') {
+          veganMeals.push(name);
+        }
+      }
+    }
+  }
+};
+
+parseFazerMenu(fazerMenu.LunchMenus[0]);
+console.log('Vegan meals', veganMeals);
+
+
 
 
 
