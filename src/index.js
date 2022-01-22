@@ -1,80 +1,93 @@
-import LunchMenu from './assets/Lunchlist.json';
-// Test
-console.log('lunch menu object', LunchMenu);
+/**Array list */
+const menu = [
+  {name: 'Lingonberry jam', price: 4.00},
+  {name: 'Mushroom and bean casserole', price: 5.50},
+  {name: 'Chili-flavoured wheat', price: 3.00},
+  {name: 'Vegetarian soup', price: 4.80},
+  {name: 'Pureed root vegetable soup with smoked cheese', price: 8.00},
+  {name:'3Jugurtti',price: 7.00}
+];
 
-const coursesEn = [];
-const coursesFi = [];
+const menuList = document.querySelector('.menu');
+const menuList2 = document.querySelector('#demo');
 
-for (let i in LunchMenu.courses){
-  coursesFi.push(LunchMenu.courses[i].title_fi);
-  coursesEn.push(LunchMenu.courses[i].title_en);
-}
+//1.
 
-const header= document.querySelector('.header');
-const menuName = document.querySelector('.menuName');
-const menu = document.querySelector('.menu');
-const langButton = document.querySelector('.lang');
-const sortButton = document.querySelector('.sort');
-const randomButton = document.querySelector('.random');
-let finnishList = true;
-
-//header picture
-const img = document.createElement("img");
-img.src = "./assets/header.jpeg";
-header.appendChild(img);
-
-coursesFi.forEach(meal => {
-  menuName.textContent = 'Menu suomeksi:';
-  menu.innerHTML += '<li>' + meal + '</li>';
+/**
+ * Function validates the names of meals
+ * @param {String} meal - takes input string as a parameter
+ */
+menu.forEach((meal) => {
+  const regex = /^[A-ZÖÄÅ]{1}[a-zöäå,A-ZÖÄÅ/0-9()-\s]{4,64}$/;
+  let mealName = meal.name;
+  let validator = regex.test(mealName);
+  if (validator) {
+    menuList.innerHTML += '<li>' + mealName + ' is valid!' + '</li>';
+  } else {
+    menuList.innerHTML += '<li>' + mealName + ' is not valid!' + '</li>';
+  }
 });
 
-//funktio menun vaihto
-const changeLanguage = () =>{
-  menu.innerHTML = '';
-  if (finnishList){
-    coursesEn.forEach(meal => {
-      menuName.textContent = 'Menu englanniksi:';
-      menu.innerHTML += '<li>' + meal + '</li>';
-    });
-    finnishList = false;
-  }else{
-    coursesFi.forEach(meal => {
-      menuName.textContent = 'Menu suomeksi:';
-      menu.innerHTML += '<li>' + meal + '</li>';
-    });
-    finnishList = true;
-  };
-};
-coursesFi.sort();
-coursesEn.sort();
+//2.
 
-//järjestä menut aakkosittain
-const sortMenu = () => {
-  menu.innerHTML= '';
-  if (finnishList){
-    coursesFi.reverse();
-    coursesFi.forEach(meal => {
-      menu.innerHTML += '<li>' + meal + '</li>';
-    });
-  }else{
-    coursesEn.reverse();
-    coursesEn.forEach(meal => {
-      menu.innerHTML += '<li>' + meal + '</li>';
-    });
-  };
-};
+/**
+ * sort()
+ * Function sorts the menu based on price,
+ * From the cheapest to the most expensive
+ */
 
-//funktio näytä random ateria
-const randomMeal = () => {
-  const random = Math.floor(Math.random()*coursesFi.length);
-  if(finnishList){
-    alert(coursesFi[random]);
-  }else{
-    alert(coursesEn[random]);
-  }
+ const sortMenubyPrice = (meal) => {
+  let sortPrice = menu.sort((a, b) => {
+    return list = a.price - b.price;
+  });
+  console.log('Sorted by price', sortPrice);
 };
+sortMenubyPrice();
 
-//nappien addeventlistenerit
-langButton.addEventListener('click', changeLanguage);
-sortButton.addEventListener('click', sortMenu);
-randomButton.addEventListener('click', randomMeal);
+//3.
+
+/**
+ * filter()
+ * Function that displays items costing under 5 euros
+ */
+const filterByPrice = () => {
+  let filtered = menu.filter(fil => fil.price < 5);
+  console.log('Filtered by price', filtered);
+};
+filterByPrice();
+
+//4.
+
+/**
+ * Map()
+ * Function that raises all the prices by 15%
+ */
+const raisePrice = () => {
+  const raised = menu.map(r => (r.price*1.15).toFixed(2));
+  console.log('Raised by 15%', raised);
+};
+raisePrice();
+
+//5.
+
+/**
+ * Reduce()
+ * Function that sums up all the prices
+ */
+
+const sumUp = () => {
+  const sum = menu.reduce((a, b) => ({ price: a.price + b.price }));
+  console.log('menu prices summed up', sum);
+};
+sumUp();
+
+
+
+
+
+
+
+
+
+
+
