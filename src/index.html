@@ -6,19 +6,26 @@
     <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body>
-  <div class="grid-container">
-      <header class="header"></header>
-
-      <h1 class="menuName"></h1>
-
-      <ul class="menu"></ul>
-
     <div class="container">
-      <button class="lang">Change language</button>
-      <button class="sort">Sort meals</button>
-      <button class="random">Show random meal</button>
+      <h1>Number guessing game</h1>
+
+      <p class="numberRange"></p>
+      <p class="guessDescription"></p>
+      <p>We'll tell you if your guess was too high or too low!</p><br>
+
+      <div class="form">
+        <label for="guessField">Enter a guess: </label>
+        <input type="text" id="guessField" class="guessField">
+        <input type="submit" value="Submit guess" class="guessSubmit">
+      </div>
+
+      <div class="resultParas">
+        <p class="guesses"></p>
+        <p class="lastResult"></p>
+        <p class="lowOrHi"></p>
+        <p class="timecount"></p>
+      </div>
     </div>
-  </div>
 
   </body>
 </html>

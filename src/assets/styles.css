@@ -1,47 +1,49 @@
-/*layout kesken*/
+html,
 body {
-  background: url("./back.jpeg");
-  margin: 0;
-  padding: 0;
-  background-attachment: fixed;
-  background-position: center right;
+  width: 100%;
+  font-family: sans-serif;
+  background: #2f4685;
 }
 
-li {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  display: grid;
-  justify-content: center;
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 3px;
-  font-size: 18px;
-  background-color: rgb(233, 232, 232);
-  padding: 10px;
-  margin: 10px;
-  margin-left: 290px;
-  margin-right: 290px;
+.container {
+  margin: 10% 25%;
+  padding: 53px;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
 }
-
-ul {
-  grid-area: main;
-  list-style-type: none;
-  padding: 0;
-  padding-top: 50px;
+p {
+  letter-spacing: 0.1em;
+  line-height: 0;
 }
 
 h1 {
-  text-align: center;
-  font-family: cursive;
-  grid-area: main;
+  color: #7e95eb;
+  text-shadow: 2px 2px #000000;
 }
 
-.lang,
-.sort,
-.random {
-  border: none;
-  border-radius: 20px;
+label {
+  font-family: Verdana, Tahoma, sans-serif;
+}
+
+.lastResult {
   color: white;
-  padding: 5px 32px;
+  padding: 10px;
+}
+
+.guessField {
+  height: 17px;
+}
+
+.guessSubmit {
+  background-color: #4d61ab;
+  color: white;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 8px 12px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -51,40 +53,33 @@ h1 {
   cursor: pointer;
 }
 
-.lang,
-.sort,
-.random {
-  background-color: rgb(230, 230, 230);
-  color: black;
-  border: 2px solid rgb(0, 0, 0);
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-
-.random:hover,
-.lang:hover,
-.sort:hover {
-  background-color: #555555;
+.guessSubmit:hover {
+  background-color: #7593e6;
   color: white;
 }
 
-.container {
-  display: grid;
-  justify-content: center;
-  grid-area: section;
-  grid-template-columns: 200px 200px 200px;
-}
-img,
-header {
-  height: 240px;
+button {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50px;
+  width: 110px;
+  background-color: #4d61ab;
+  color: white;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 8px 12px;
   text-align: center;
-  grid-area: header;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-areas:
-    "header header header header header header"
-    "main main main main main main"
-    "section section section section section section";
+button:hover {
+  background-color: #7593e6;
+  color: white;
 }
