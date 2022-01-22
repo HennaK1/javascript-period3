@@ -22,9 +22,9 @@ menu.forEach((meal) => {
   let mealName = meal.name;
   let validator = regex.test(mealName);
   if (validator) {
-    menuList.innerHTML += '<li>' + mealName + ' is valid!' + '</li>';
+    console.log(mealName + ' is valid!') ;
   } else {
-    menuList.innerHTML += '<li>' + mealName + ' is not valid!' + '</li>';
+    console.log(mealName + ' is not valid!');
   }
 });
 
@@ -35,7 +35,6 @@ menu.forEach((meal) => {
  * Function sorts the menu based on price,
  * From the cheapest to the most expensive
  */
-
  const sortMenubyPrice = (meal) => {
   let sortPrice = menu.sort((a, b) => {
     return list = a.price - b.price;
@@ -74,7 +73,6 @@ raisePrice();
  * Reduce()
  * Function that sums up all the prices
  */
-
 const sumUp = () => {
   const sum = menu.reduce((a, b) => ({ price: a.price + b.price }));
   console.log('menu prices summed up', sum);
