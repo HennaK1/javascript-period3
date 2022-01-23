@@ -1,124 +1,91 @@
-import fazerMenu from './assets/fazer-menu.json';
+import SodexoData from './modules/sodexo-data';
+import {getParsedMenuFazer} from './modules/fazer-data';
 
-
-/**Array menu list */
-const menu = [
-  {name: 'Lingonberry jam', price: 4.00},
-  {name: 'Mushroom and bean casserole', price: 5.50},
-  {name: 'Chili-flavoured wheat', price: 3.00},
-  {name: 'Vegetarian soup', price: 4.80},
-  {name: 'Pureed root vegetable soup with smoked cheese', price: 8.00},
-  {name:'3Jugurtti',price: 7.00}
-];
-
-const menuList = document.querySelector('.menu');
-const menuList2 = document.querySelector('#demo');
-
-//1.
+let lang = 'fi';
 
 /**
- * Function validates the names of meals
- * @param {String} meal - takes input string as a parameter
+ * Sorts an array alphapetically
+ *
+ * @param {Array} courses - Menu arrays
+ * @param {Array} order - 'asc' or 'desc'
+ * @returns {Array} sorted menu
  */
-menu.forEach((meal) => {
-  const regex = /^[A-ZÖÄÅ]{1}[a-zöäå,A-ZÖÄÅ/0-9()-\s]{4,64}$/;
-  let mealName = meal.name;
-  let validator = regex.test(mealName);
-  if (validator) {
-    console.log(mealName + ' is valid!') ;
+const sortCourses = (courses, order = 'asc') => {
+  let sortedMenu = courses.sort();
+  if (order === 'desc') {
+    sortedMenu.reverse();
+  }
+  return sortedMenu;
+};
+
+/**
+ * Shows items from menu data
+ *
+ * @param {string} restaurant - name of the restaurant
+ * @param {Array} menu - menu data
+ */
+const showMenu = (restaurant, menu) => {
+  const list = document.querySelector('#' + restaurant);
+  list.innerHTML = '';
+  for (const item of menu) {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    list.appendChild(listItem);
+  }
+};
+
+/**
+ * Random course from an array list
+ *
+ * @param {Array} courses
+ * @returns {string} course
+ */
+const randomCourse = courses => {
+  const randomIndex = Math.floor(Math.random() * courses.length);
+  return courses[randomIndex];
+};
+const displayRandomCourse = () => {
+  if(lang === 'fi'){
+    alert('Sodexo: '+ randomCourse(SodexoData.coursesFi) + '\n'+ 'Fazer: '+ randomCourse(getParsedMenuFazer('fi')));
+
+  }else{
+    alert('Sodexo: '+ randomCourse(SodexoData.coursesEn) + '\n'+ 'Fazer: '+ randomCourse(getParsedMenuFazer('en')));
+  }
+
+};
+/**
+ * Function for language change
+ */
+const changeLanguage = () => {
+  if (lang === 'fi') {
+    lang = 'en';
+    showMenu('sodexo', SodexoData.coursesEn);
+    showMenu('fazer', getParsedMenuFazer('en'));
   } else {
-    console.log(mealName + ' is not valid!');
-  }
-});
-
-//2.
-
-/**
- * sort()
- * Function sorts the menu based on price,
- * From the cheapest to the most expensive
- */
- const sortMenubyPrice = (meal) => {
-  let sortPrice = menu.sort((a, b) => {
-    return a.price - b.price;
-  });
-  console.log('Sorted by price', sortPrice);
-};
-sortMenubyPrice();
-
-//3.
-
-/**
- * filter()
- * Function that displays items costing under 5 euros
- */
-const filterByPrice = () => {
-  let filtered = menu.filter(fil => fil.price < 5);
-  console.log('Filtered by price', filtered);
-};
-filterByPrice();
-
-//4.
-
-/**
- * Map()
- * Function that raises all the prices by 15%
- */
-const raisePrice = () => {
-  const raised = menu.map(r => (r.price*1.15).toFixed(2));
-  console.log('Raised by 15%', raised);
-};
-raisePrice();
-
-//5.
-
-/**
- * Reduce()
- * Function that sums up all the prices
- */
-const sumUp = () => {
-  const sum = menu.reduce((a, b) => ({ price: a.price + b.price }));
-  console.log('menu prices summed up', sum);
-};
-sumUp();
-
-// B
-
-//Array list for vegan dishes
-const veganMeals = [];
-
-/**
- * Finds vegan dishes from Fazer json file
- * @param {String} menu json-file parsing
- */
-const parseFazerMenu = (menu) => {
-  const setMenus = menu.SetMenus;
-  for (const setMenu of setMenus) {
-    const meals = setMenu.Meals;
-    for (const meal of meals) {
-      const name = meal.Name;
-      const diets = meal.Diets;
-      for (const diet of diets){
-        if (diet == 'Veg') {
-          veganMeals.push(name);
-        }
-      }
-    }
+    lang = 'fi';
+    showMenu('sodexo', SodexoData.coursesFi);
+    showMenu('fazer', getParsedMenuFazer('fi'));
   }
 };
+/**
+ * Function for showing sorted menu
+ */
+const renderSortedMenu = () => {
+  if(lang === 'fi'){
+    showMenu('sodexo', sortCourses(SodexoData.coursesFi));
+    showMenu('fazer', sortCourses(getParsedMenuFazer('fi')));
+  }else if (lang === 'en'){
+    showMenu('sodexo', sortCourses(SodexoData.coursesEn));
+    showMenu('fazer', sortCourses(getParsedMenuFazer('en')));
+  }
+};
+//Drive menus and add event listeners
+const load = () => {
+  showMenu('sodexo', SodexoData.coursesFi);
+  showMenu('fazer', getParsedMenuFazer('fi'));
+  document.querySelector('#lang-button').addEventListener('click', changeLanguage);
+  document.querySelector('#sort-button').addEventListener('click', renderSortedMenu);
+  document.querySelector('#random-button').addEventListener('click', displayRandomCourse);
+};
 
-parseFazerMenu(fazerMenu.LunchMenus[0]);
-console.log('Vegan meals', veganMeals);
-
-
-
-
-
-
-
-
-
-
-
-
-
+load();
