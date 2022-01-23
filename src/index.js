@@ -97,3 +97,68 @@ const resetGame = () => {
 
   randomNumber = Math.floor(Math.random() * maxValue) + minValue;
 };
+
+//Week2-task1
+
+/*
+Optimaalisin algoritmi on puolitushaku eli binäärihaku. Arvoa etsitään ensin vaihteluvälin puolivälistä
+ja tietäen onko numero liian suuri vai pieni, jatketaan hakua taulukon alku-tai loppupään puolivälistä
+ja niin edelleen.
+*/
+
+let computerGuessCount = 1;
+let guessHistory = [];
+
+//Algorithm
+binaryAlgorithm = (answ, left, right) => {
+  console.log('Vastaus, Alueen eka nro, Alueen vika nro', answ, left, right);
+
+  while (left <= right) {
+    let middle = Math.floor(left + (right - left) / 2);
+    guessHistory.push(middle);
+    if (middle < answ) {
+      left = middle + 1;
+    } else if (middle > answ) {
+      right = middle - 1;
+    } else {
+      return middle;
+    }
+    computerGuessCount++;
+  }
+  let res = left - 1;
+  return res;
+};
+
+//Computer plays 1000 times
+ComputerPlayer = () => {
+  let avg = 0;
+  let sum = 0;
+  let maxim = minValue;
+  let minim = maxValue;
+  guessHistory = [];
+
+  for (i = 0; i < 1001; i++) {
+    setGameOver();
+    resetGame();
+
+    const rightAnswer = binaryAlgorithm(randomNumber, minValue, maxValue);
+    console.log("Right answer: ", rightAnswer);
+    console.log("Needed guesses was: ", computerGuessCount);
+    console.log("Guesses: ", guessHistory);
+    sum = sum + computerGuessCount;
+    avg = sum / i;
+    if (computerGuessCount > maxim) {
+      maxim = computerGuessCount;
+    }
+    if (guessCount < minim) {
+      minim = computerGuessCount;
+    }
+  }
+
+  console.log("AVG: ", avg);
+};
+ComputerPlayer();
+
+//Minium guess is 1.
+
+//Max Guesses between 1-1000 guesses is 10, which is log base 2 of 1,000 to be rounded up.
