@@ -1,65 +1,60 @@
-//week3-examples
+//Game cheat code
+const cheat = (cheatWord) => {
+  let keyHistory = [];
+  document.addEventListener('keyup', event => {
+    keyHistory.push(event.key);
+    console.log(event);
+    if(keyHistory.join('') === cheatWord) {
+      keyHistory = [];
+      alert('Secret alert unlocked!');
+    }
+  });
+};
+cheat('hi');
 
-//AJASTUS
+/* Function for showing x and y coordinates when mouse is double clicked on the page
+*/
+document.ondblclick = () => {dblClick();};
 
-//wait for 1,5 seconds before logging
-setTimeout(() => console.log("The tick"),1500);
+const dblClick = () => {
+  document.querySelector('html').addEventListener('dblclick', (event) => {
+    let x = event.clientX;
+    let y = event.clientY;
+    console.log('X: ' +x+ '\tY: ' +y);
 
-console.log('kukkuu');
-
-let counter = 0;
-
-//1,5 sekunnin välein x10
-const timer = setInterval(() => {
-console.log("The tick");
-counter++;
-if (counter > 9) {
-  clearInterval(timer);
-  console.log('loppu');
-  }
-}, 1500);
-
-console.log('kukkuu');
-console.log(timer);
-
-
-//Kuuntelijat/events
-
-const clickHandler = () => {
-  console.log('p clicked');
+    const coords ='Mouse coordinates: X: ' + x + ' Y: ' + y;
+    document.getElementById("coords").innerHTML = coords;
+  });
 };
 
-//document.querySelector('p').addEventListener('click', clickHandler);
-document.querySelector('p').addEventListener('click', (event) => {
-console.log('p clicked', event);
-if (event.altKey) {
-  console.log('p clicked with alt');
-  event.stopPropagation(); //eventin eteneminen puussa
-  }
-});
+/* Element reacting to touches but not clicks (touch screen only)*/
+function myFunction() {
+  document.getElementById("touch").innerHTML = console.log("Hello World");
+};
 
-document.querySelector('#content').addEventListener('click', event => {
-  console.log('div clicked');
-});
+/*Create a timer that tells user to "hurry up" after 15 secs of browsing*/
+const timer = () => {
+  setTimeout(() => {
+    alert('Hurry up!');
+  }, 15000);
+};
+timer();
 
-//keyboard events
+/* Timer idling */
+const timer2 = (duration) =>{
+  let timer;
+  const resetTimer = (event) =>{
+    clearTimeout(timer);
+    timer = setTimeout(() =>{
+      alert('Do something');
+    },duration * 1000);
+};
+resetTimer();
 
-const keyHistory=[];
-document.addEventListener('keyup', event => {
-  //console.log('key event', event.key);
-  keyHistory.push(event.key);
-  if (event.key === 'Enter') {
-    console.log(keyHistory);
-    keyHistory = [];
-  }
-});
+document.addEventListener('keypress', resetTimer);
+document.addEventListener('mousemove', resetTimer);
+};
+timer2(15);
 
-//CustomEvent
 
-document.addEventListener('myMessage', event => {
-  console.log('got a message: ', event.detailt.msg);
-});
-const myEvent = new CustomEvent('myMessage', {detail: {msg:'hello!'}});
-setInterval(() => {
-  document.dispatchEvent(myEvent);
-}, 200);
+
