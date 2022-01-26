@@ -12,25 +12,29 @@ const cheat = (cheatWord) => {
 };
 cheat('hi');
 
+
 /* Function for showing x and y coordinates when mouse is double clicked on the page
 */
-document.ondblclick = () => {dblClick();};
-
-const dblClick = () => {
-  document.querySelector('html').addEventListener('dblclick', (event) => {
-    let x = event.clientX;
-    let y = event.clientY;
-    console.log('X: ' +x+ '\tY: ' +y);
-
-    const coords ='Mouse coordinates: X: ' + x + ' Y: ' + y;
-    document.getElementById("coords").innerHTML = coords;
+const clickCoords = () => {
+  const output = document.querySelector('#coords');
+  document.addEventListener('dblclick', event => {
+    console.log('X: '+event.clientX + '\tY: ' + event.clientY);
+    output.textContent = `Double-clicked at X: ${event.clientX} Y:  ${event.clientY}.`;
   });
 };
+clickCoords();
 
-/* Element reacting to touches but not clicks (touch screen only)*/
-function myFunction() {
-  document.getElementById("touch").innerHTML = console.log("Hello World");
+
+/* Element reacting to touches but not clicks*/
+const reactTouch = () => {
+  const target = document.querySelector('.touch');
+  const output = document.querySelector('.output');
+  target.addEventListener('touchstart', event => {
+    output.textContent = `Your touch was registered!`;
+  });
 };
+reactTouch();
+
 
 /*Create a timer that tells user to "hurry up" after 15 secs of browsing*/
 const timer = () => {
@@ -39,6 +43,7 @@ const timer = () => {
   }, 15000);
 };
 timer();
+
 
 /* Timer idling */
 const timer2 = (duration) =>{
@@ -53,6 +58,7 @@ resetTimer();
 
 document.addEventListener('keypress', resetTimer);
 document.addEventListener('mousemove', resetTimer);
+document.addEventListener('touchstart', resetTimer);
 };
 timer2(15);
 
