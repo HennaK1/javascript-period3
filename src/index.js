@@ -1,6 +1,5 @@
-
 import SodexoData from './modules/sodexo-data';
-import {getParsedMenuFazer} from './modules/fazer-data';
+import FazerData from './modules/fazer-data';
 
 let lang = 'fi';
 
@@ -20,7 +19,7 @@ const sortCourses = (courses, order = 'asc') => {
 };
 
 /**
- * Shows items from menu data
+ * Renders html items from menu data
  *
  * @param {string} restaurant - name of the restaurant
  * @param {Array} menu - menu data
@@ -46,13 +45,7 @@ const randomCourse = courses => {
   return courses[randomIndex];
 };
 const displayRandomCourse = () => {
-  if(lang === 'fi'){
-    alert('Sodexo: '+ randomCourse(SodexoData.coursesFi) + '\n'+ 'Fazer: '+ randomCourse(getParsedMenuFazer('fi')));
-
-  }else{
-    alert('Sodexo: '+ randomCourse(SodexoData.coursesEn) + '\n'+ 'Fazer: '+ randomCourse(getParsedMenuFazer('en')));
-  }
-
+  alert('Sodexo: '+ randomCourse(SodexoData.getDailyMenu(lang)) + '\n'+ 'Fazer: '+ randomCourse(FazerData.getDailyMenu(lang)));
 };
 /**
  * Function for language change
@@ -60,30 +53,23 @@ const displayRandomCourse = () => {
 const changeLanguage = () => {
   if (lang === 'fi') {
     lang = 'en';
-    showMenu('sodexo', SodexoData.coursesEn);
-    showMenu('fazer', getParsedMenuFazer('en'));
   } else {
     lang = 'fi';
-    showMenu('sodexo', SodexoData.coursesFi);
-    showMenu('fazer', getParsedMenuFazer('fi'));
   }
+  showMenu('sodexo', SodexoData.getDailyMenu(lang));
+  showMenu('fazer', FazerData.getDailyMenu(lang));
 };
 /**
  * Function for showing sorted menu
  */
 const renderSortedMenu = () => {
-  if(lang === 'fi'){
-    showMenu('sodexo', sortCourses(SodexoData.coursesFi));
-    showMenu('fazer', sortCourses(getParsedMenuFazer('fi')));
-  }else if (lang === 'en'){
-    showMenu('sodexo', sortCourses(SodexoData.coursesEn));
-    showMenu('fazer', sortCourses(getParsedMenuFazer('en')));
-  }
+  showMenu('sodexo', sortCourses(SodexoData.getDailyMenu(lang)));
+  showMenu('fazer', sortCourses(FazerData.getDailyMenu(lang)));
 };
 //Drive menus and add event listeners
 const load = () => {
-  showMenu('sodexo', SodexoData.coursesFi);
-  showMenu('fazer', getParsedMenuFazer('fi'));
+  showMenu('sodexo', SodexoData.getDailyMenu('fi'));
+  showMenu('fazer', FazerData.getDailyMenu('fi'));
   document.querySelector('#lang-button').addEventListener('click', changeLanguage);
   document.querySelector('#sort-button').addEventListener('click', renderSortedMenu);
   document.querySelector('#random-button').addEventListener('click', displayRandomCourse);
