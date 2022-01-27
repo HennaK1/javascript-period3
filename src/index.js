@@ -1,72 +1,92 @@
-/**Game cheat code
-* Function for when user types a secret code so alert shows up
-* @param {String} cheatWord secret code word
-*/
-const cheat = (cheatWord) => {
-  let keyHistory = [];
-  document.addEventListener('keyup', event => {
-    keyHistory.push(event.key);
-    console.log(event);
-    if(keyHistory.join('') === cheatWord) {
-      keyHistory = [];
-      alert('Secret alert unlocked!');
-    }
-  });
-};
-cheat('hi');
 
+import SodexoData from './modules/sodexo-data';
+import {getParsedMenuFazer} from './modules/fazer-data';
+
+let lang = 'fi';
 
 /**
- * Function for showing x and y coordinates when mouse is double clicked on the html page
-*/
-const clickCoords = () => {
-  const output = document.querySelector('#coords');
-  document.addEventListener('dblclick', event => {
-    let x = event.clientX;
-    let y = event.clientY;
-    console.log('X: '+ x + '\tY: ' + y);
-    output.textContent = `Double-clicked at X: ${x} Y:  ${y}.`;
-  });
-};
-clickCoords();
-
-
-/**
- * Element reacting to touches but not clicks
+ * Sorts an array alphapetically
+ *
+ * @param {Array} courses - Menu arrays
+ * @param {Array} order - 'asc' or 'desc'
+ * @returns {Array} sorted menu
  */
-document.querySelector('#touch').addEventListener('mouseover', event => {
-  console.log('You touched the text!');
-});
-
+const sortCourses = (courses, order = 'asc') => {
+  let sortedMenu = courses.sort();
+  if (order === 'desc') {
+    sortedMenu.reverse();
+  }
+  return sortedMenu;
+};
 
 /**
- * Timer function telling user to "hurry up" after 15 secs of browsing
+ * Shows items from menu data
+ *
+ * @param {string} restaurant - name of the restaurant
+ * @param {Array} menu - menu data
  */
-const timer = () => {
-  setTimeout(() => {
-    alert('Hurry up!');
-  }, 15000);
+const showMenu = (restaurant, menu) => {
+  const list = document.querySelector('#' + restaurant);
+  list.innerHTML = '';
+  for (const item of menu) {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    list.appendChild(listItem);
+  }
 };
-timer();
-
 
 /**
-* Function for timer telling to hurry up after 15 seconds idling on the page
-*/
-const timer2 = () =>{
-  let timer;
-  const resetTimer = (event) =>{
-    clearTimeout(timer);
-    timer = setTimeout(() =>{
-      alert('Do something');
-    }, 15000);
+ * Random course from an array list
+ *
+ * @param {Array} courses
+ * @returns {string} course
+ */
+const randomCourse = courses => {
+  const randomIndex = Math.floor(Math.random() * courses.length);
+  return courses[randomIndex];
 };
-resetTimer();
+const displayRandomCourse = () => {
+  if(lang === 'fi'){
+    alert('Sodexo: '+ randomCourse(SodexoData.coursesFi) + '\n'+ 'Fazer: '+ randomCourse(getParsedMenuFazer('fi')));
 
-document.addEventListener('keyup', resetTimer);
-document.addEventListener('mousemove', resetTimer);
+  }else{
+    alert('Sodexo: '+ randomCourse(SodexoData.coursesEn) + '\n'+ 'Fazer: '+ randomCourse(getParsedMenuFazer('en')));
+  }
+
 };
-timer2(15);
+/**
+ * Function for language change
+ */
+const changeLanguage = () => {
+  if (lang === 'fi') {
+    lang = 'en';
+    showMenu('sodexo', SodexoData.coursesEn);
+    showMenu('fazer', getParsedMenuFazer('en'));
+  } else {
+    lang = 'fi';
+    showMenu('sodexo', SodexoData.coursesFi);
+    showMenu('fazer', getParsedMenuFazer('fi'));
+  }
+};
+/**
+ * Function for showing sorted menu
+ */
+const renderSortedMenu = () => {
+  if(lang === 'fi'){
+    showMenu('sodexo', sortCourses(SodexoData.coursesFi));
+    showMenu('fazer', sortCourses(getParsedMenuFazer('fi')));
+  }else if (lang === 'en'){
+    showMenu('sodexo', sortCourses(SodexoData.coursesEn));
+    showMenu('fazer', sortCourses(getParsedMenuFazer('en')));
+  }
+};
+//Drive menus and add event listeners
+const load = () => {
+  showMenu('sodexo', SodexoData.coursesFi);
+  showMenu('fazer', getParsedMenuFazer('fi'));
+  document.querySelector('#lang-button').addEventListener('click', changeLanguage);
+  document.querySelector('#sort-button').addEventListener('click', renderSortedMenu);
+  document.querySelector('#random-button').addEventListener('click', displayRandomCourse);
+};
 
-
-
+load();
