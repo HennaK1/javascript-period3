@@ -1,5 +1,7 @@
 import SodexoLunchMenu from '../assets/sodexo.json';
 
+//const sodexoDataUrl = 'https://www.sodexo.fi/ruokalistat/output/daily_json/152/2022-02-07';
+
 console.log(SodexoLunchMenu.courses);
 
 let coursesEn = [];

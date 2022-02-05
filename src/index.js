@@ -121,7 +121,3 @@ const getJsonMenu = async () => {
 getJsonMenu('152').then(data => {
   console.log(data);
 });
-
-
-
-
