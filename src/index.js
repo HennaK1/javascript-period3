@@ -1,5 +1,7 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
+import {fetchData} from './modules/network';
+
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -86,3 +88,40 @@ const load = () => {
 };
 
 load();
+
+const netPromise = fetch('https://www.sodexo.fi/ruokalistat/output/weekly_json/152');
+
+netPromise.then(data => data.json()).then((json) => {
+  console.log(json);
+  fetch(json.repos_url).then(data => data.json()).then(data => {
+    console.log(data);
+        // fetch(data[0].collaborators_url).then();
+  });
+}).catch(error => {
+  console.error('fetch sodexo menu error', error);
+});
+
+console.log('promise 1', netPromise);
+
+// Async - await & error handling
+const getJsonMenu = async () => {
+  let menuData = {};
+  try {
+    const response = await fetch(`https://www.sodexo.fi/ruokalistat/output/weekly_json/${listNmbr}`);
+    if (!response.ok) {
+      throw new Error('problem: '+ response.statusText);
+    }
+    menuData = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+  return menuData;
+};
+
+getJsonMenu('152').then(data => {
+  console.log(data);
+});
+
+
+
+
