@@ -1,6 +1,5 @@
-import FazerLunchMenuEn from '../assets/fazer-en.json';
-import FazerLunchMenuFi from '../assets/fazer-fi.json';
-
+const dataUrlFi = "https://www.foodandco.fi/api/restaurant/menu/week?language=fi&restaurantPageId=270540&weekDate=2022-02-01";
+const dataUrlEn = "https://www.foodandco.fi/api/restaurant/menu/week?language=en&restaurantPageId=270540&weekDate=2022-02-01";
 /**
  * Parsing fazer menu for a day from json data
  *

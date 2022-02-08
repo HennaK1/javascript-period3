@@ -3,9 +3,12 @@
  *
  * @param {string} url - api endpoint url
  */
- const fetchData = async (url, useProxy = false) => {
-  if (useProxy) {
+ const fetchData = async (url, useProxy) => {
+  if (useProxy == 'allorigins') {
     url = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  } else if (useProxy==='fazer-php') {
+    const subPath = url.split('menu/')[1];
+    url = `https://users.metropolia.fi/~hennaeko/digimedia/proxy/fazer-proxy.php/${subPath}`;
   }
   let jsonData;
   try {
