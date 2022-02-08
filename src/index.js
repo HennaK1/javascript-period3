@@ -4,7 +4,7 @@ import {fetchData} from './modules/network';
 import {getTodayIndex} from './modules/tools';
 
 
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js').then(registration => {
       console.log('SW registered: ', registration);
@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
       console.log('SW registration failed: ', registrationError);
     });
   });
-}
+}*/
 
 let lang = 'fi';
 
@@ -81,44 +81,19 @@ const renderSortedMenu = () => {
 };
 //Drive menus and add event listeners
 const load = () => {
-  showMenu('sodexo', SodexoData.getDailyMenu('fi'));
-  showMenu('fazer', FazerData.getDailyMenu('fi'));
+
+  fetchData('https://www.sodexo.fi/ruokalistat/output/weekly_json/152').then(data => {
+    console.log('sodexo', data);
+  });
+  fetchData(FazerData.dataUrlFi, 'fazer-php').then(data => {
+    console.log('fazer', data);
+    const courses = FazerData.parseDayMenu(data.LunchMenus, getTodayIndex());
+    showMenu(courses, 'fazer');
+  });
+
   document.querySelector('#lang-button').addEventListener('click', changeLanguage);
   document.querySelector('#sort-button').addEventListener('click', renderSortedMenu);
   document.querySelector('#random-button').addEventListener('click', displayRandomCourse);
 };
 
 load();
-
-const netPromise = fetch('https://www.sodexo.fi/ruokalistat/output/weekly_json/152');
-
-netPromise.then(data => data.json()).then((json) => {
-  console.log(json);
-  fetch(json.repos_url).then(data => data.json()).then(data => {
-    console.log(data);
-        // fetch(data[0].collaborators_url).then();
-  });
-}).catch(error => {
-  console.error('fetch sodexo menu error', error);
-});
-
-console.log('promise 1', netPromise);
-
-// Async - await & error handling
-const getJsonMenu = async () => {
-  let menuData = {};
-  try {
-    const response = await fetch(`https://www.sodexo.fi/ruokalistat/output/weekly_json/${listNmbr}`);
-    if (!response.ok) {
-      throw new Error('problem: '+ response.statusText);
-    }
-    menuData = await response.json();
-  } catch (error) {
-    console.error(error);
-  }
-  return menuData;
-};
-
-getJsonMenu('152').then(data => {
-  console.log(data);
-});

@@ -1,36 +1,28 @@
-//const today = new Date().toISOString().split('T')[0];
-//console.log('today is ', today);
-//const dataUrlFi = `https://www.foodandco.fi/api/restaurant/menu/week?language=fi&restaurantPageId=270540&weekDate=${today}`;
-//const dataUrlEn = `https://www.foodandco.fi/api/restaurant/menu/week?language=en&restaurantPageId=270540&weekDate=${today}`;
+const today = new Date().toISOString().split('T')[0];
+console.log('today is ', today);
 
-const dataUrlFi = "https://www.foodandco.fi/api/restaurant/menu/week?language=fi&restaurantPageId=270540&weekDate=2022-02-01";
-const dataUrlEn = "https://www.foodandco.fi/api/restaurant/menu/week?language=en&restaurantPageId=270540&weekDate=2022-02-01";
+const dataUrlFi = `https://www.foodandco.fi/api/restaurant/menu/week?language=fi&restaurantPageId=270540&weekDate=${today}`;
+const dataUrlEn = `https://www.foodandco.fi/api/restaurant/menu/week?language=en&restaurantPageId=270540&weekDate=${today}`;
+
 /**
- * Parsing fazer menu for a day from json data
+ * Parses Fazer json data to simple array of strings
  *
- * @param {*} menuData - menu data
- * @param {*} dayOfWeek - index number for the day here monday
- * @returns {Array} - meals for a day
+ * @param {Array} lunchMenus lunch menu data
+ * @param {Number} dayOfWeek 0-6
+ * @returns {Array} daily menu
  */
- const parseMenu = (menuData, dayOfWeek) => {
-  let dailyMenu = menuData.LunchMenus[dayOfWeek].SetMenus.map(setMenu => {
-    let mealName = setMenu.Name;
-    let dishes = setMenu.Meals.map(dish => `${dish.Name} (${dish.Diets.join(', ')})`);
-    dishes = dishes.join(', ');
-    return mealName ? `${mealName}: ${dishes}` : dishes;
+ const parseDayMenu = (lunchMenus, dayOfWeek) => {
+  const dayMenu = lunchMenus[dayOfWeek].SetMenus.map(setMenu => {
+    const name = setMenu.Name;
+    let meals = '';
+    // TODO: clean output
+    for (const meal of setMenu.Meals) {
+      meals += meal.Name + ', ';
+    }
+    return  name ? name + ': ' + meals : meals;
   });
-  return dailyMenu;
+  return dayMenu;
 };
 
-let coursesFi = parseMenu(FazerLunchMenuFi, 0);
- //console.log('parsed fazer menu', coursesFi);
-let coursesEn = parseMenu(FazerLunchMenuEn, 0);
-
-const getDailyMenu = (lang, weekDay = 0) => {
-  return (lang === 'fi') ?
-  parseMenu(FazerLunchMenuFi, weekDay):parseMenu(FazerLunchMenuEn, weekDay);
-};
-
-const FazerData = {getDailyMenu, dataUrlEn, dataUrlFi};
-
+const FazerData = {parseDayMenu, dataUrlFi, dataUrlEn};
 export default FazerData;
