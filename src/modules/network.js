@@ -2,6 +2,8 @@
  * Fetches (GET) JSON data from APIs
  *
  * @param {string} url - api endpoint url
+ * @param {string} useProxy - optional proxy server
+ *
  */
  const fetchData = async (url, useProxy) => {
   if (useProxy == 'allorigins') {
@@ -17,6 +19,9 @@
       throw new Error(`HTTP ${response.status} - ${response.statusText}`);
     }
     jsonData = await response.json();
+    if (useProxy === 'allorigins') {
+      jsonData = JSON.parse(data.contents);
+    }
   } catch (error) {
     console.error('fetchData() error', error);
     jsonData = {};

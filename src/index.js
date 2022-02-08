@@ -1,6 +1,7 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 import {fetchData} from './modules/network';
+import {getTodayIndex} from './modules/tools';
 
 
 if ('serviceWorker' in navigator) {
