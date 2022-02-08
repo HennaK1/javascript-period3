@@ -37,10 +37,10 @@ const sortCourses = (courses, order = 'asc') => {
  * @param {string} restaurant - name of the restaurant
  * @param {Array} menu - menu data
  */
-const showMenu = (restaurant, menu) => {
-  const list = document.querySelector('#' + restaurant);
+const showMenu = (data, targetId) => {
+  const list = document.querySelector('#' + targetId);
   list.innerHTML = '';
-  for (const item of menu) {
+  for (const item of data) {
     const listItem = document.createElement('li');
     listItem.textContent = item;
     list.appendChild(listItem);
@@ -82,8 +82,10 @@ const renderSortedMenu = () => {
 //Drive menus and add event listeners
 const load = () => {
 
-  fetchData('https://www.sodexo.fi/ruokalistat/output/weekly_json/152').then(data => {
+  fetchData(SodexoData.dataUrlDaily).then(data => {
     console.log('sodexo', data);
+    const courses = SodexoData.parseDayMenu(data.courses);
+    showMenu(courses, 'sodexo');
   });
   fetchData(FazerData.dataUrlFi, 'fazer-php').then(data => {
     console.log('fazer', data);
