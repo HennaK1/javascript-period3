@@ -14,7 +14,22 @@ import {getTodayIndex} from './modules/tools';
   });
 }*/
 
-let lang = 'fi';
+let language = 'fi';
+/**
+ * Renders html items from menu data
+ *
+ * @param {string} targetId - target of the id
+ * @param {Array} data - menu data
+ */
+const showMenu = (data, targetId) => {
+  const list = document.querySelector('#' + targetId);
+  list.innerHTML = '';
+  for (const item of data) {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    list.appendChild(listItem);
+  }
+};
 
 /**
  * Sorts an array alphapetically
@@ -32,22 +47,6 @@ const sortCourses = (courses, order = 'asc') => {
 };
 
 /**
- * Renders html items from menu data
- *
- * @param {string} restaurant - name of the restaurant
- * @param {Array} menu - menu data
- */
-const showMenu = (data, targetId) => {
-  const list = document.querySelector('#' + targetId);
-  list.innerHTML = '';
-  for (const item of data) {
-    const listItem = document.createElement('li');
-    listItem.textContent = item;
-    list.appendChild(listItem);
-  }
-};
-
-/**
  * Random course from an array list
  *
  * @param {Array} courses
@@ -58,26 +57,29 @@ const randomCourse = courses => {
   return courses[randomIndex];
 };
 const displayRandomCourse = () => {
-  alert('Sodexo: '+ randomCourse(SodexoData.getDailyMenu(lang)) + '\n'+ 'Fazer: '+ randomCourse(FazerData.getDailyMenu(lang)));
+  alert('Sodexo: '+ randomCourse(SodexoData.getDailyMenu(language)) + '\n'+ 'Fazer: '+ randomCourse(FazerData.getDailyMenu(language)));
 };
 /**
  * Function for language change
  */
-const changeLanguage = () => {
-  if (lang === 'fi') {
-    lang = 'en';
+const changeLanguage = (parsedMenu) => {
+  if (language === 'fi') {
+    language = 'en';
+    showMenu(SodexoData.coursesEn, 'sodexo');
+    showMenu(FazerData.coursesEn, 'fazer');
   } else {
-    lang = 'fi';
+    language = 'fi';
+    showMenu(SodexoData.coursesFi, 'sodexo');
+    showMenu(FazerData.coursesFi, 'fazer');
   }
-  showMenu('sodexo', SodexoData.getDailyMenu(lang));
-  showMenu('fazer', FazerData.getDailyMenu(lang));
 };
+
 /**
  * Function for showing sorted menu
  */
 const renderSortedMenu = () => {
-  showMenu('sodexo', sortCourses(SodexoData.getDailyMenu(lang)));
-  showMenu('fazer', sortCourses(FazerData.getDailyMenu(lang)));
+  showMenu('sodexo', sortCourses(SodexoData.parseDayMenu(language)));
+  showMenu('fazer', sortCourses(FazerData.getDailyMenu(language)));
 };
 //Drive menus and add event listeners
 const load = () => {
