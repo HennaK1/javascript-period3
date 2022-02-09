@@ -1,11 +1,14 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
+import {Swappable} from '@shopify/draggable';
 
 const root = document.documentElement;
+const grid = document.querySelector('.menu-grid-container');
 const themeButton = document.querySelector('#theme-button');
 
 let lang = 'fi';
 let theme = 'light';
+
 
 /**
  * Local storage for buttons and themes
@@ -21,7 +24,7 @@ if (localStorage.getItem('theme') === 'light') {
   themeButton.textContent = 'Bright theme';
 }
 /**
- * Function for changing theme
+ * Function for setting colors by which theme
  */
 const changeTheme = () => {
   if (theme === 'light') {
@@ -33,6 +36,11 @@ const changeTheme = () => {
     root.style.setProperty('--searchColour', 'black');
     root.style.setProperty('--descriptionText', 'white');
     root.style.setProperty('--footerblue', 'gray');
+    root.style.setProperty('--menuColour', '#878787');
+    root.style.setProperty('--menuListColour', 'white');
+    root.style.setProperty('--addNewColour', 'white');
+    root.style.setProperty('--addIconColour', 'white');
+    root.style.setProperty('--restaurantNameColour', 'white');
 
   } else {
     theme = 'light';
@@ -43,10 +51,15 @@ const changeTheme = () => {
     root.style.setProperty('--searchColour', 'white');
     root.style.setProperty('--descriptionText', '#00043a');
     root.style.setProperty('--footerblue', '#1a7bbc');
+    root.style.setProperty('--menuColour', '#f1f1f1');
+    root.style.setProperty('--menuListColour', '#00043a');
+    root.style.setProperty('--addNewColour', '#6e6e6e');
+    root.style.setProperty('--addIconColour', '#858585');
+    root.style.setProperty('--restaurantNameColour', '#00043a');
   }
 };
 /**
- * Function for loading theme
+ * Function for loading theme colors using local storage
  */
 const loadTheme = () => {
   if (localStorage.getItem('theme') === 'dark') {
@@ -55,12 +68,22 @@ const loadTheme = () => {
     root.style.setProperty('--searchColour', 'black');
     root.style.setProperty('--descriptionText', 'white');
     root.style.setProperty('--footerblue', 'gray');
+    root.style.setProperty('--menuColour', '#878787');
+    root.style.setProperty('--menuListColour', 'white');
+    root.style.setProperty('--addNewColour', 'white');
+    root.style.setProperty('--addIconColour', 'white');
+    root.style.setProperty('--restaurantNameColour', 'white');
   } else {
     root.style.setProperty('--bodyColour', 'white');
     root.style.setProperty('--navColour', 'white');
     root.style.setProperty('--searchColour', 'white');
     root.style.setProperty('--descriptionText', '#00043a');
     root.style.setProperty('--footerblue', '#1a7bbc');
+    root.style.setProperty('--menuColour', '#f1f1f1');
+    root.style.setProperty('--menuListColour', '#00043a');
+    root.style.setProperty('--addNewColour', '#6e6e6e');
+    root.style.setProperty('--addIconColour', '#858585');
+    root.style.setProperty('--restaurantNameColour', '#00043a');
   }
 };
 
@@ -129,13 +152,33 @@ const renderSortedMenu = () => {
   showMenu('sodexo', sortCourses(SodexoData.getDailyMenu(lang)));
   showMenu('fazer', sortCourses(FazerData.getDailyMenu(lang)));
 };
-//Drive menus and add event listeners
+/**
+ * Menucards to be draggable (shopify)
+ */
+const swappable = new Swappable(document.querySelectorAll('.menu-grid-container'), {
+  draggable: '.menucard',
+});
+
+/**
+ * Function for hiding all the menucards
+ */
+const hideShowMenus = () => {
+  let x = document.querySelector(".menu-grid-container");
+  if (x.style.display === "none") {
+    x.style.display = "grid";
+  } else {
+    x.style.display = "none";
+  }
+};
+
+//Load menus and add event listeners
 const load = () => {
   showMenu('sodexo', SodexoData.getDailyMenu('fi'));
   showMenu('fazer', FazerData.getDailyMenu('fi'));
   document.querySelector('#lang-button').addEventListener('click', changeLanguage);
   document.querySelector('#sort-button').addEventListener('click', renderSortedMenu);
   document.querySelector('#random-button').addEventListener('click', displayRandomCourse);
+  document.querySelector('#show-hide-button').addEventListener('click', hideShowMenus);
   themeButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     changeTheme();
