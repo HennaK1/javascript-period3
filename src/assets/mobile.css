@@ -1,0 +1,116 @@
+/*Media säännöt*/
+
+@media screen and (max-width: 999px) {
+  nav ul {
+    width: auto !important;
+  }
+  .textcontainer {
+    font-size: 1em;
+  }
+  .menucard {
+    width: 600px;
+  }
+  .search-container {
+    margin-left: auto;
+  }
+  .bannertext-heading {
+    font-size: 40px;
+  }
+  .bannertext-under {
+    font-size: 15px;
+  }
+  .card-img {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  ul.navbarlist li {
+    margin-left: 1px;
+  }
+  input {
+    width: 155px;
+    font-size: 0.6em;
+    margin-top: 23px;
+  }
+  .navmenu {
+    flex-direction: column;
+    align-items: center;
+  }
+  .iconsearch {
+    top: 29px;
+  }
+  .menucard {
+    width: 480px;
+  }
+  .textcontainer {
+    font-size: 1em;
+  }
+  .search-container {
+    margin-left: 0;
+  }
+  .bannertext-heading {
+    font-size: 38px;
+  }
+  .bannertext-under {
+    font-size: 13px;
+  }
+  footer {
+    height: 66px;
+    line-height: 66px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .navmenu {
+    flex-direction: column;
+    align-items: center;
+  }
+  .menucard {
+    width: 400px;
+  }
+  .search-container {
+    top: 4px;
+  }
+  label {
+    display: block;
+    margin-right: 90%;
+    cursor: pointer;
+    margin-bottom: -50px;
+  }
+  .navbarlist {
+    position: relative;
+    top: 22px;
+    background-color: var(--white);
+    /*Mobiilikoossa piilossa ellei checkboxia klikata*/
+    display: none;
+  }
+  .narbarlist li {
+    display: block;
+  }
+  #toggleCheck:checked + .navbarlist {
+    /*luodaan esiin*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bannertext-heading {
+    font-size: 30px;
+  }
+  .bannertext-under {
+    font-size: 12px;
+  }
+  .card-img {
+    width: 100%;
+  }
+  .textcontainer {
+    font-size: 0.9em;
+  }
+  .banner {
+    height: 205px;
+  }
+  footer {
+    height: 66px;
+    line-height: 66px;
+  }
+}
